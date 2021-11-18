@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Rowdies';
+  src: url('./fonts/Rowdies-Regular.ttf');
+}
+
+
+body {
+  margin: 0;
+  font-family: "Rowdies", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button, input[type="submit"] {
+  all: unset;
+}

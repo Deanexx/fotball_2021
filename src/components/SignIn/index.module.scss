@@ -1,0 +1,34 @@
+@import "./../../styles/mixings.scss";
+@import "./../../styles/vars.scss";
+
+.btn {
+    @include button($yellow);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reg{
+    &__header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        p {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: $white;
+        }
+    }
+
+    &__inpute {
+        margin: 20px 0px 10px;
+        height: 35px;
+        width: 100%;
+        background-color: $grey;
+    }
+}
