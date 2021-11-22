@@ -1,23 +1,26 @@
 import style from "./index.module.scss";
 import React, { FC, useState } from "react";
+import { setUser } from "./../../store/userSlice/userThunks"
+import { useAppDispatch } from "../../hooks";
 
 import Switch from "./Switch/Switch";
 
 const SignIn: FC<{}> = () => {
-    const [endPoint, setEndPoint] = useState<"/login" | "/register">("/login");
-    const [inpVal, setInpVal] = useState("");
-    
+    const [endPoint, setEndPoint] = useState<"login" | "register">("login");
+    const [name, setName] = useState("");
+    const dispatch = useAppDispatch();
+
     const submitForm = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
-
+        dispatch(setUser({ endPoint, name: name}))
     }
 
     const switchToggle = () => {
-        setEndPoint( prevState => prevState === "/login" ? "/register" : "/login");
+        setEndPoint( prevState => prevState === "login" ? "register" : "login");
     }
 
     const computedEndPoint = () => {
-        return endPoint === "/login"
+        return endPoint === "login"
     }
 
     return(
@@ -32,8 +35,8 @@ const SignIn: FC<{}> = () => {
 
                 <input type="text"
                     className={style.reg__inpute} 
-                    value={inpVal}
-                    onChange={ (e: React.FormEvent<HTMLInputElement>) => setInpVal(e.currentTarget.value)} 
+                    value={name}
+                    onChange={ (e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)} 
                     placeholder="Name as on Telegram"/>
 
                 <button className={ style.btn } type="submit"> Submit </button>
