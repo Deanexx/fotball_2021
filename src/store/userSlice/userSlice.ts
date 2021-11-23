@@ -1,9 +1,12 @@
-import { createSlice  } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction  } from "@reduxjs/toolkit";
 import IUser from "../../models/user";
 import { setUser } from "./userThunks";
 import ReadCookie from "../../utils/ReadCookie";
 
-const initialState: IUser | null = null;
+const initialState: IUser = {
+    _id: "",
+    name: ""
+};
 
 const userSlice = createSlice({
     name: "User",
@@ -11,12 +14,11 @@ const userSlice = createSlice({
     reducers: {
         check_user: () => {
             const cookie = ReadCookie("userSF");
-            if(cookie) return void (cookie as IUser);
+            if(cookie) return cookie as IUser;
         }
     },
     extraReducers: {
-        [setUser.fulfilled.type]: (state, action) => {
-            console.log(action, "ACTION!!!")
+        [setUser.fulfilled.type]: (_, action: PayloadAction<IUser>) => {
             return action.payload
         }
     }

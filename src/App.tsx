@@ -1,19 +1,26 @@
 import './styles/App.scss';
-import Header from "./components/Header/Header";
-import { useAppSelector, useAppDispatch } from "./hooks"
+
+import { useAppDispatch } from "./hooks"
 import { useEffect } from 'react';
+
 import { check_user } from "./store/userSlice/userSlice"
+import { getVotes } from './store/voteSlice/voteThunks';
+
+import Header from "./components/Header/Header";
+import VoteList from './components/VoteList/VoteList';
 
 function App() {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user)
+
   useEffect(() => {
-    console.log(user, "user")
     dispatch(check_user());
-  })
+    dispatch(getVotes());
+  }, [dispatch])
+
   return (
     <div className="App">
         <Header/>
+        <VoteList/>
     </div>
   );
 }
