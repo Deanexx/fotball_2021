@@ -12,12 +12,12 @@ const Header: FC = () => {
     return(
         <div className={ style.header }>
             <p className={ style.header__logo }>Soccer</p>
-            <button className={ style.header__button } onClick={ () => btn_click() }> Reg </button>
-            { btn && <ModalWrapper>
+            <button className={ style.header__button } onClick={() => btn_click()}> Reg </button>
+            { btn && <ModalWrapper on={ btn_click }>
                         <SignIn/>
                     </ModalWrapper> }
         </div>
     )
 }
 
-export default Header
+export default Header;

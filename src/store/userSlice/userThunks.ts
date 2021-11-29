@@ -11,9 +11,7 @@ const setUser = createAsyncThunk(
     "user/regLog",
     async (payload: ISubmit) => {
         const {name, endPoint} = payload;
-        // console.log(name, endPoint, "Before request sent")
         const {status, data} = await instance.post<IUser>(`user/${endPoint}`, { name });
-        // console.log(status, data, "DATA, STATUS!!!");
         if (status === 201)
             return data
 })

@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./userSlice/userSlice";
 import voteSlice from "./voteSlice/voteSlice";
-
+import errorSlice from "./errorSlice/errorSlice";
 const store = configureStore({
     reducer: {
         user: userSlice,
-        vote: voteSlice
+        vote: voteSlice,
+        error: errorSlice
     }
 })
 

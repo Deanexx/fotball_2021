@@ -10,3 +10,13 @@
     background: $dark;
     padding: 10px 20px;
 }
+
+.cls__btn {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 10%;
+    right: 10%;
+    color: $white;
+    z-index: 999;
+}

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import instance from "../../server";
-import IVote from "../../models/vote";
+import instance from "../../../server";
+import IVote from "../../../models/vote";
 
 const getVotes = createAsyncThunk(
     "vote/getvote",
@@ -11,4 +11,4 @@ const getVotes = createAsyncThunk(
     }
 )
 
-export { getVotes };
+export default getVotes;

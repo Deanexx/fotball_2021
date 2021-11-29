@@ -14,6 +14,7 @@ const userSlice = createSlice({
     reducers: {
         check_user: () => {
             const cookie = ReadCookie("userSF");
+            console.log(cookie, 1)
             if(cookie) return cookie as IUser;
         }
     },

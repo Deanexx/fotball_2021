@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import IUser from "../../models/user";
 import IVote from "../../models/vote";
-import { getVotes } from "./voteThunks";
+import getVotes from "./Thunks/getVotesThunk";
 
 const initialState: IVote = {
     _id: "",
@@ -15,13 +16,16 @@ const voteSlice = createSlice({
     name: "Vote",
     initialState,
     reducers: {
-
+        add_user: (state, action: PayloadAction<IUser>) => {
+            state.users.push(action.payload);
+        }
     },
     extraReducers: {
-        [getVotes.fulfilled.type]: (_, action: PayloadAction<IVote>) => {
+        [getVotes.fulfilled.type]: 
+            (_, action: PayloadAction<IVote>) => {
             return action.payload
         }
     }
 })
-
+export const { add_user } = voteSlice.actions;
 export default voteSlice.reducer;
