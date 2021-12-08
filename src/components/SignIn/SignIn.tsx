@@ -1,18 +1,27 @@
 import style from "./index.module.scss";
 import React, { FC, useState } from "react";
-import { setUser } from "./../../store/userSlice/userThunks"
-import { useAppDispatch } from "../../hooks";
+import { setUser } from "../../store/userSlice/Thunks/userThunksReg"
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import Switch from "./Switch/Switch";
 
-const SignIn: FC<{}> = () => {
+const SignIn: FC<{ activeModal: Function }> = ({ activeModal }) => {
+    const loading = useAppSelector(state => state.user.loading);
     const [endPoint, setEndPoint] = useState<"login" | "register">("login");
     const [name, setName] = useState("");
     const dispatch = useAppDispatch();
 
-    const submitForm = (e: React.FormEvent<HTMLElement>) => {
+    let [btnClicked, setBtnClicked] = useState(false);
+
+    const animate_btn = () => {
+        setBtnClicked(true);
+        setTimeout(() =>{ setBtnClicked(false)}, 200)
+    }
+
+    const submitForm = async (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
-        dispatch(setUser({ endPoint, name: name}))
+        await dispatch(setUser({ endPoint, name: name }))
+        activeModal();
     }
 
     const switchToggle = () => {
@@ -39,7 +48,11 @@ const SignIn: FC<{}> = () => {
                     onChange={ (e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)} 
                     placeholder="Name as on Telegram"/>
 
-                <button className={ style.btn } type="submit"> Submit </button>
+                <button 
+                    className={ style.btn + " " + (btnClicked ? style.button__clicked : "") } 
+                    onClick={ () => animate_btn()} 
+                    type="submit"> 
+                        { loading ? ">>>" : "Submit"} </button>
 
             </form>
         </div>

@@ -10,7 +10,9 @@ const injectStore = (_store:any) => store = _store;
 const instance = axios.create({
     timeout: 1000,
     withCredentials: true,
-    baseURL: "http://localhost:8000"
+    baseURL: "https://soccer2021sf.herokuapp.com"
+    // baseURL: "http://localhost:8000"
+    
 })
 
 instance.interceptors.response.use(response => response,
@@ -19,7 +21,7 @@ instance.interceptors.response.use(response => response,
         const { message } = data;
         console.log(data, status, message, "ERROR CONSOLE")
         store.dispatch(addError({ message, status, active: true }))
-        return ;
+        return Promise.reject(error);
 })
 
 export { injectStore };

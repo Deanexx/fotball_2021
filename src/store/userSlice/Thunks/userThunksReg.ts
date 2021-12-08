@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import IUser from "./../../models/user";
-import instance from "./../../server/"
+
+import IUser from "../../../models/user";
+
+import instance from "../../../server"
 
 interface ISubmit {
     endPoint: "login" | "register",
@@ -11,7 +13,7 @@ const setUser = createAsyncThunk(
     "user/regLog",
     async (payload: ISubmit) => {
         const {name, endPoint} = payload;
-        const {status, data} = await instance.post<IUser>(`user/${endPoint}`, { name });
+        const {status, data} = await instance.post<Omit<IUser, "loading">>(`user/${endPoint}`, { name });
         if (status === 201)
             return data
 })

@@ -5,6 +5,10 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import Ball from "../Ball/Ball";
 
 import addUser from "../../store/voteSlice/Thunks/addUserThunk";
+import { removeUser } from "../../store/voteSlice/Thunks/removeUserThunk";
+
+import top_img from "./../../assets/top_move.svg"
+import bottom_img from "./../../assets/bottom_move.svg"
 
 const VoteList: FC = () => {
     const dispatch = useAppDispatch();
@@ -12,6 +16,8 @@ const VoteList: FC = () => {
     const currVote = useAppSelector(state => state.vote)
     const isVoted = useAppSelector(state => state.vote.users.find( el => el._id === state.user._id ))
     const user = useAppSelector(state => state.user)
+    const peopleRegistered = useAppSelector(state => state.vote.totalUsers)
+    const maxPeople = useAppSelector(state => state.vote.maxPlayers);
 
     const [topGoals, setTopGoals] = useState<HTMLDivElement | null>(null);
     const [bottomGoals, setBottomGoals] = useState<HTMLDivElement | null>(null);
@@ -46,14 +52,21 @@ const VoteList: FC = () => {
 
         </div>
         <div className={style.soccer__midLine}>
-            <div className={style.soccer__midLine__circle + " " + (!isVoted ? "" : style.soccer__midLine__circle__active) }>
-                {   !isVoted ? <Ball 
+            <div
+                onClick={ () => !isVoted ? null : dispatch(removeUser(user._id)) }
+                className={style.soccer__midLine__circle + " " + (!isVoted ? "" : style.soccer__midLine__circle__active) }>
+            { (!isVoted && peopleRegistered < maxPeople) && <img src={top_img} className={ style.soccer__midLine__circle__top } alt="" /> }
+            { (!isVoted && peopleRegistered < maxPeople) && <img src={bottom_img} className={ style.soccer__midLine__circle__bottom } alt="" /> }
+            {    !isVoted ? (peopleRegistered < maxPeople ? <Ball 
                         topGoals={ topGoals } 
                         bottomGoals={ bottomGoals }
-                        isGoal = { () => dispatch(addUser(user)) }/> 
+                        isGoal = { () => dispatch(addUser(user)) }/> :
+                        <p style={{textAlign:"center", color: "purple"}}>
+                            Game is full
+                        </p> ) 
                             : <p className={ style.reset__button }>
                                     Reset
-                                </p>    }
+                                </p> }
             </div>
         </div>
         <div ref={el => setBottomGoals(el) } className={style.soccer__bottom__goals}>

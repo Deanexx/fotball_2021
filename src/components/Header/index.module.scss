@@ -11,11 +11,37 @@
     align-items: center;
     padding: 0 5%;
     &__logo {
-        color: $white;
-        font-size: 1.5rem;
+        position: relative;
+        &__inner {
+            position: inherit;
+            color: $white;
+            font-size: 1.5rem;
+            z-index: 1000;
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: $super-dark; 
+            font-family: "Rowdies-bold", sans-serif;
+        }
+        &__ball {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 25%;
+            right: -12px;
+            animation: ball_animate 10s linear infinite;
+            z-index: 1;
+        }
     }
 
     &__button {
-        @include button($yellow)
+        @include button($yellow);
+        &__signOut {
+            @include button($red);
+        }
+    }
+}
+
+@keyframes ball_animate {
+    100% {
+        transform: rotate(360deg);
     }
 }

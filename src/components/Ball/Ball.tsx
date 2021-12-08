@@ -1,8 +1,8 @@
-
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import style from "./index.module.scss";
 import img from "./../../assets/soccer_ball2.svg"
-import { useAppSelector } from "../../hooks";
+import { useAppSelector, useAppDispatch } from "../../hooks";
+import { addError } from "./../../store/errorSlice/errorSlice";
 
 interface props {
     bottomGoals: HTMLDivElement | null,
@@ -26,17 +26,32 @@ let score__goal = (boundaries: ReturnType<typeof CoordGoals>, {x, y}: {x: number
          && y >= boundaries.top
             && y <= boundaries.bottom
                 && x >= boundaries.left
-                    && x <= boundaries.right ? true : false
+                    && x <= boundaries.right ? true : false;
 }
 
 const Ball: FC<props> = ({ topGoals, bottomGoals, isGoal }) => {
+    const dispatch = useAppDispatch();
+    
+    let image: any;
     const userID = useAppSelector( state => state.user._id );
 
     let innerTouch: { x: number, y: number } = { x: -1, y: -1 };
     const topGoalsCoordinates = CoordGoals(topGoals);
     const bottomGoalsCoordinates = CoordGoals(bottomGoals);
+    const [flag, setFlag] = useState(false);
+
+    useEffect(() => {
+        if(flag)
+            isGoal();
+    }, [flag, isGoal])
 
     const ft_startTouch = (e: React.TouchEvent<HTMLImageElement>) => {
+        e.preventDefault();
+        if (userID.length <= 0)
+            return dispatch(addError({ 
+                    active: true,
+                    message: "Please register !",
+                    status: 400}))
         let elem: any = e.target;
         let touch = e.touches[0];
 
@@ -52,8 +67,8 @@ const Ball: FC<props> = ({ topGoals, bottomGoals, isGoal }) => {
                 || score__goal(bottomGoalsCoordinates, { x: ch_touch.pageX, y: ch_touch.pageY }))
                     {
                         elem.removeEventListener("touchmove", touchMoveListener);
-                        // to do aditional check if user in a list
-                        isGoal();
+                        if(!flag)
+                            setFlag(true)   
                     }
             elem.style.top = ch_touch.pageY - innerTouch.y + 25 + "px";
             elem.style.left = ch_touch.pageX - innerTouch.x + 25 + "px";
@@ -62,12 +77,43 @@ const Ball: FC<props> = ({ topGoals, bottomGoals, isGoal }) => {
             elem.addEventListener("touchmove", touchMoveListener, { passive: false, cancelable: true } )
     }
 
+    const ft_startDrag = (e: any) => {
+        e.preventDefault();
+        if(userID.length <= 0) return dispatch(addError({ 
+            active: true,
+            message: "Please register !",
+            status: 400}));
+        const elem = e.target;
 
+        if(innerTouch.x === -1 && innerTouch.y === -1)
+            innerTouch = { y: e.pageY, x: e.pageX };
 
+        let ft_mouseMove = (event:any) => {
+            if( score__goal(topGoalsCoordinates, { x: event.pageX, y: event.pageY }) 
+                || score__goal(bottomGoalsCoordinates, { x: event.pageX, y: event.pageY }))
+                    {
+                        document.removeEventListener("mousemove", ft_mouseMove)
+                        if(!flag)
+                            setFlag(true)
+                    }
+            elem.style.top = event.pageY - innerTouch.y + 25 + 'px';
+            elem.style.left = event.pageX - innerTouch.x + 25 + 'px';
+            elem.addEventListener("mouseup", 
+                () => document.removeEventListener("mousemove", ft_mouseMove));
+        }
+        
+        document.addEventListener("mousemove", ft_mouseMove);
+    }
+
+    useEffect(() => {
+        if (image)
+            image.addEventListener("touchstart", ft_startTouch, { passive: false })
+    })
 
     return (
         <img 
-            onTouchStart = { (e) => ft_startTouch(e)}
+            ref = { ref => image = ref }
+            onMouseDown= { (e) => ft_startDrag(e)}
             className={style.ball}
             src={img}
             alt="Ball" />

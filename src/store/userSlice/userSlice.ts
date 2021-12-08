@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction  } from "@reduxjs/toolkit";
 import IUser from "../../models/user";
-import { setUser } from "./userThunks";
+import { setUser } from "./Thunks/userThunksReg";
 import ReadCookie from "../../utils/ReadCookie";
 
 const initialState: IUser = {
     _id: "",
-    name: ""
+    name: "",
+    loading: false
 };
 
 const userSlice = createSlice({
@@ -14,16 +15,28 @@ const userSlice = createSlice({
     reducers: {
         check_user: () => {
             const cookie = ReadCookie("userSF");
-            console.log(cookie, 1)
-            if(cookie) return cookie as IUser;
-        }
+            if(cookie) return {...cookie, loading: false }  as IUser;
+        },
+        signOutUser: () => {
+            return { _id: "", name: "", loading: false }
+        },
+
     },
     extraReducers: {
-        [setUser.fulfilled.type]: (_, action: PayloadAction<IUser>) => {
-            return action.payload
+        [setUser.fulfilled.type]: (_, action: PayloadAction<Omit<IUser, "loading">>) => {
+            return { _id : action.payload._id,
+                     name : action.payload.name,
+                     loading: false }
+        },
+        [setUser.pending.type]: (state) => {
+            console.log("PENNDING")
+            state.loading = true;
+        },
+        [setUser.rejected.type]: (state) => {
+            state.loading = false;
         }
     }
 })
 
-export const { check_user } = userSlice.actions;
+export const { check_user, signOutUser } = userSlice.actions;
 export default userSlice.reducer;

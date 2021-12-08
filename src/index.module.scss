@@ -1,5 +1,113 @@
 @import "./styles/vars.scss";
+@import "./styles/mixings.scss";
 
 .modal__error {
     color: $red;
+}
+
+
+.vote {
+    padding-bottom: 15px;
+    &__title {
+        text-align: center;
+        margin: 0;
+        padding: 20px 0 0;
+        font-family: "Rowdies-Bold", sans-serif;
+        -webkit-text-stroke-color: $super-dark;
+        -webkit-text-stroke-width: 2px;
+        color: $blue;
+        &__am {
+            font-family: "Rowdies", sans-serif;
+            color: $white;
+        }
+    }
+
+    background-image: url("./assets/scale_1200_2.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.map {
+    background: lighten($color: $grey, $amount: 15);
+    height: 450px;
+    padding-top: 20px;
+    &__inner {
+        width: 80%;
+        height: 300px;
+        margin: 0 auto;
+        background-color: #e3fcf7;
+    }
+    &__title {
+        display: flex;
+        flex-direction: column;
+        &_inner {
+            margin-top: -20px;
+        }
+        &__inps {
+            display: flex; 
+            justify-content: space-between;
+            input {
+                width: 100px;
+                margin: 0 0 10px 5px;
+            }
+        }
+    }
+}
+
+
+.btn {
+    @include button($yellow);
+    margin: 5px auto;
+}
+
+.btn__red {
+    @include button($red);
+    margin: 5px auto;
+}
+
+.whos__goals {
+    @extend .center;
+    text-align: center;
+    &__name {
+        color: $red;
+        font-size: 1.2rem;
+        -webkit-text-stroke-color: $super-dark;
+        -webkit-text-stroke-width: 2px;
+        &__inner {
+            font-family: "Rowdies-Bold", sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $blue
+        }
+    }
+}
+
+.created__by {
+    background: $super-dark;
+    color: $blue;
+    text-align: center;
+    padding: 5px 0px;
+
+    p {
+        margin: 0px;
+        text-decoration: none;
+        color: $white;
+        a { color: $yellow}
+    }
+}
+
+@media (max-width: 600px) {
+    .map__inner { width: 80%}
+
+    .vote {
+        background-position: center;
+    }
+}
+
+@media (min-width: 600px) {
+    .map__inner { width: 40% }
+    .vote {
+        background-position: revert;
+    }
 }

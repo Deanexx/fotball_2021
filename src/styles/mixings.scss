@@ -5,10 +5,15 @@
     text-align: center;
     font-family: "Rowdies", sans-serif;
     cursor: pointer;
+    transition: all 0.2s linear;
 }
 
 .center {
     display: center;
     justify-content: center;
     align-items: center;
+}
+
+.button__clicked {
+    border-radius: 20px;
 }

@@ -2,9 +2,13 @@ import IUser from "./user";
 
 export default interface IVote {
     _id: string,
-    users: IUser[],
+    users: Omit<IUser, "loading">[],
     maxPlayers: number,
-    isGoals: string,
+    isGoals: Omit<IUser, "loading"> | null,
     active: boolean,
-    totalUsers: number
+    totalUsers: number,
+    location: {
+        type: "Point",
+        coordinates: number[];
+    }
 }

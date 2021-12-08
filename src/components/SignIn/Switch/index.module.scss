@@ -8,6 +8,8 @@
     border-radius: 33px;
     transition: all 0.1s linear;
 
+    cursor: pointer;
+
     &__active__background {
         display: block;
         position: absolute;

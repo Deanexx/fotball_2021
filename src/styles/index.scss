@@ -3,6 +3,10 @@
   src: url('./fonts/Rowdies-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'Rowdies-bold';
+  src: url('./fonts/Rowdies-Bold.ttf');
+}
 
 body {
   margin: 0;
@@ -19,4 +23,8 @@ code {
 
 button, input[type="submit"] {
   all: unset;
+}
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
 }
