@@ -10,8 +10,8 @@ const injectStore = (_store:any) => store = _store;
 const instance = axios.create({
     timeout: 1000,
     withCredentials: true,
-    baseURL: "https://soccer2021sf.herokuapp.com"
-    // baseURL: "http://localhost:8000"
+    // baseURL: "https://soccer2021sf.herokuapp.com"
+    baseURL: "http://localhost:8000"
     
 })
 

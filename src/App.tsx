@@ -155,7 +155,7 @@ function App() {
             </div>
             <button className={ style.btn } onClick={ () => set_latlng()}> Change </button>
           </div>
-          { (voteLocation.coordinates[0] && voteLocation.coordinates[0]) && <GoogleMapReact
+          { (voteLocation.coordinates[0] && voteLocation.coordinates[1]) && <GoogleMapReact
             bootstrapURLKeys={ { key: "AIzaSyAIlnrxKH2bx4f2WE90kL-zlJ7O8VoOLYU"} }
             defaultCenter={ {
               lat: voteLocation.coordinates[0],
