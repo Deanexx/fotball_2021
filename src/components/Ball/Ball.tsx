@@ -47,7 +47,7 @@ const Ball: FC<props> = ({ topGoals, bottomGoals, isGoal }) => {
 
     const ft_startTouch = (e: React.TouchEvent<HTMLImageElement>) => {
         e.preventDefault();
-        if (userID.length <= 0)
+        if (userID.length < 0)
             return dispatch(addError({ 
                     active: true,
                     message: "Please register !",
