@@ -64,7 +64,7 @@ function App() {
     setLoading(true);
     animate_btn();
     try {
-        const { status } = await instance.patch("vote/setGoals");
+        const { status } = await instance.patch("vote/setGoals", { _id: user._id });
         if (status === 204)
           dispatch(set_goals_user({ _id: user._id, name: user.name }))
     }

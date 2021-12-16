@@ -13,7 +13,7 @@ const setUser = createAsyncThunk(
     "user/regLog",
     async (payload: ISubmit) => {
         const {name, endPoint} = payload;
-        const {status, data} = await instance.post<Omit<IUser, "loading">>(`user/${endPoint}`, { name });
+        const { status, data } = await instance.post<Omit<IUser, "loading">>(`user/${endPoint}`, { name });
         if (status === 201)
             return data
 })

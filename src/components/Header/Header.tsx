@@ -6,7 +6,8 @@ import img from "./../../assets/soccer_ball2.svg"
 
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
-import { signOut } from "../../store/userSlice/Thunks/userThunkSignOut";
+// import { signOut } from "../../store/userSlice/Thunks/userThunkSignOut";
+import { signOutUser } from "../../store/userSlice/userSlice";
 
 const Header: FC = () => {
     const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ const Header: FC = () => {
             { isUser ?
                  <button 
                     className={ style.header__button__signOut }
-                    onClick = { () => dispatch(signOut()) }> { user.name } </button> :
+                    onClick = { () => dispatch(signOutUser()) }> { user.name } </button> :
                  <button 
                     className={ style.header__button + " " + ( btnClicked ? style.button__clicked : "" )}
                     onClick={() => {
