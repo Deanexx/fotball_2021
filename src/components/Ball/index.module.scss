@@ -7,3 +7,13 @@
     z-index: 99 ;
     cursor: pointer;
 }
+
+.animate__ball {
+    animation: ball_animate 10s linear infinite;
+}
+
+@keyframes ball_animate {
+    100% {
+        transform: rotate(360deg);
+    }
+}

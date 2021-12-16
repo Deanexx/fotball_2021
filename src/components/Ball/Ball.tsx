@@ -114,7 +114,7 @@ const Ball: FC<props> = ({ topGoals, bottomGoals, isGoal }) => {
         <img 
             ref = { ref => image = ref }
             onMouseDown= { (e) => ft_startDrag(e)}
-            className={style.ball}
+            className={(style.ball + " ") + (flag ? style.animate__ball : "")}
             src={img}
             alt="Ball" />
     )
